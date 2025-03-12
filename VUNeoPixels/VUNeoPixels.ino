@@ -38,7 +38,8 @@ void VUMeter(){
   // get value at analog pin
   int level = analogRead(A0);
 
-   if (level > decayingMicReading){
+// Peak follower
+  if (level > decayingMicReading){
     decayingMicReading = level;
   }else{
     decayingMicReading *= .999;
