@@ -63,7 +63,7 @@ void micProcessing(int micValue) {
   micAvg = smoothing * micAvg + (1 - smoothing) * micValue;
 
   // map to control range
-  int mappedLevel = constrain(map(micValue, micLow, micHigh, 0, 500), 0, 255);
+  int mappedLevel = constrain(abs(map(micValue, micLow, micHigh, 0, 500)), 0, 255);
   // int mappedLevel = constrain(abs(map(micValue, micLow, micHigh, 0, 500)), 0, 255);
 
   // decay peakFollower value
@@ -126,14 +126,14 @@ void brightness(int level) {
 }
 
 void brightTrails() {
-  for (int i = 0; i < NUMPIXELS; i++) {
+  for (int i = 0; i < NUMPIXELS; i+=1) {
     int tempPtr = (int)(NUMPIXELS - i + peakHistoryPointer) % micHistoryLength;
     int historyVal = peakHistory[tempPtr];
 
     // set color ratios
-    int r = (int)(.5 * historyVal);
-    int g = int(.4 * historyVal);
-    int b = int(.15 * historyVal);
+    int r = (int)(1 * historyVal);
+    int g = int(.7 * historyVal);
+    int b = int(.5 * historyVal);
     // Serial.println(historyVal);
     pixels.setPixelColor(i, pixels.Color(r, g, b));
   }
@@ -146,7 +146,7 @@ void wakeUP() {
   pixels.show();
   for (int i = 0; i < NUMPIXELS; i++) {
     // set pixel to value R, G, B
-    pixels.setPixelColor(i, pixels.Color(255, 100, 8));
+    pixels.setPixelColor(i, pixels.Color(200, 200, 200));
     pixels.show();
     delay(5);
   }
